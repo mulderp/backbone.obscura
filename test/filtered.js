@@ -1,19 +1,20 @@
 var assert = chai.assert;
 
-var mockData = [
-  { a: 1, b: 2, c:'a' },
-  { a: 1, b: 3, c:'b' },
-  { a: 1, b: 3, c:'c' },
-  { a: 2, b: 2, c:'20' },
-  { a: 2, b: 2, c:'3' }
+var mockFilterData = [
+  { a: 1, b: 2, c:'a', d: 'small'},
+  { a: 1, b: 3, c:'b', d: 'small'},
+  { a: 1, b: 3, c:'c', d: 'small'},
+  { a: 2, b: 2, c:'20', d: 'large'},
+  { a: 2, b: 2, c:'3', d: 'medium'}
 ];
+
 
 var filtered, superset;
 
 describe('filtered collection', function() {
 
   beforeEach(function() {
-    superset = new Backbone.Collection(mockData);
+    superset = new Backbone.Collection(mockFilterData);
     filtered = new Backbone.Obscura(superset);
   });
 
@@ -126,6 +127,17 @@ describe('filtered collection', function() {
       assert(called);
     });
 
+  });
+
+  describe('filterBy with Array', function() {
+
+    it('returns values contained in Array', function() {
+
+      // add a filter on the 'd' key with Array
+      filtered.filterBy('Array', {d: function(val) { return _.contains(['medium','large'], val); }});
+      assert(filtered.length === 2);
+
+    });
   });
 
   describe('collection filtered with objects, function values', function() {

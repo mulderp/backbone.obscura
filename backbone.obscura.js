@@ -498,7 +498,7 @@ function createFilterObject(filterFunction, keys) {
 //     key: function(val) { ... }
 //   }
 //
-// and turns it into a function that accepts a model an returns a
+// and turns it into a function that accepts a model and returns a
 // boolean + a list of the keys that the function depends on.
 function createFilterFromObject(filterObj) {
   var keys = _.keys(filterObj);
